@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.legacy.egp</groupId>
+    <artifactId>legacy-egp-app</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Legacy EGP Application</name>
+    <description>Legacy Java EE Enterprise Government Portal Application</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Legacy Java EE versions -->
+        <javaee.version>6.0</javaee.version>
+        <ejb.version>3.1</ejb.version>
+        <servlet.version>2.5</servlet.version>
+        <jsp.version>2.1</jsp.version>
+        <jpa.version>1.0</jpa.version>
+        
+        <!-- Other dependencies -->
+        <log4j.version>1.2.17</log4j.version>
+        <junit.version>4.12</junit.version>
+        <postgresql.version>9.4.1212</postgresql.version>
+        <oracle.version>11.2.0.4</oracle.version>
+    </properties>
+
+    <modules>
+        <module>egp-core-ejb</module>
+        <module>egp-portal-war</module>
+        <module>egp-ear</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Java EE API -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javaee.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- EJB API -->
+            <dependency>
+                <groupId>javax.ejb</groupId>
+                <artifactId>ejb-api</artifactId>
+                <version>${ejb.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- Servlet API -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- JSP API -->
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- JPA API -->
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${jpa.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            
+            <!-- Logging -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            
+            <!-- Database drivers -->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+            
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <configuration>
+                        <ejbVersion>3.1</ejbVersion>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.2.3</version>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ear-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

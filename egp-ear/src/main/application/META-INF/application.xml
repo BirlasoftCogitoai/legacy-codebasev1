@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+             http://java.sun.com/xml/ns/javaee/application_6.xsd"
+             version="6">
+
+    <application-name>Legacy EGP Application</application-name>
+    <description>Legacy Enterprise Government Portal - Java EE Application</description>
+
+    <!-- EJB Module -->
+    <module>
+        <ejb>egp-core-ejb-1.0.0-SNAPSHOT.jar</ejb>
+    </module>
+
+    <!-- Web Module -->
+    <module>
+        <web>
+            <web-uri>egp-portal-war-1.0.0-SNAPSHOT.war</web-uri>
+            <context-root>/egp-portal</context-root>
+        </web>
+    </module>
+
+    <!-- Legacy: Security roles for the entire application -->
+    <security-role>
+        <role-name>user</role-name>
+    </security-role>
+    
+    <security-role>
+        <role-name>supervisor</role-name>
+    </security-role>
+    
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+
+    <!-- Legacy: Library directory for shared JARs -->
+    <library-directory>lib</library-directory>
+
+</application>

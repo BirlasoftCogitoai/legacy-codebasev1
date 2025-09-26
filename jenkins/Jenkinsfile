@@ -1,0 +1,198 @@
+// Legacy Jenkins Pipeline for EGP Application
+// Typical enterprise CI/CD from mid-2000s era
+
+pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven-3.6.3'
+        jdk 'JDK-1.8'
+    }
+    
+    environment {
+        // Legacy environment variables
+        MAVEN_OPTS = '-Xmx1024m -XX:MaxPermSize=256m'
+        JAVA_OPTS = '-Xms512m -Xmx1024m'
+        
+        // Application server paths (legacy)
+        JBOSS_HOME = '/opt/jboss-as-7.1.1'
+        WEBLOGIC_HOME = '/opt/oracle/middleware/wlserver_12.1'
+        
+        // Database connection (hardcoded - legacy practice!)
+        DB_HOST = 'legacy-db.internal.corp'
+        DB_PORT = '5432'
+        DB_NAME = 'egp_prod'
+        DB_USER = 'egp_app'
+        // DB_PASSWORD should be in Jenkins credentials, but legacy apps often had it hardcoded
+        
+        // Deployment targets
+        DEV_SERVER = 'egp-dev.internal.corp:9990'
+        TEST_SERVER = 'egp-test.internal.corp:9990'
+        PROD_SERVER = 'egp-prod.internal.corp:9990'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Legacy SVN checkout (before Git adoption)
+                echo 'Checking out from SVN repository...'
+                // svn checkout https://svn.corp.com/egp/trunk .
+                
+                // Modern Git checkout
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                echo 'Building Legacy EGP Application...'
+                
+                // Clean and compile
+                sh 'mvn clean compile'
+                
+                // Run legacy Ant tasks if needed (mixed build systems)
+                // sh 'ant legacy-tasks'
+            }
+        }
+        
+        stage('Unit Tests') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    // Publish test results (JUnit format)
+                    junit '**/target/surefire-reports/*.xml'
+                    
+                    // Legacy: Often skipped or minimal test coverage
+                    echo 'Test coverage: ~15% (typical for legacy apps)'
+                }
+            }
+        }
+        
+        stage('Static Analysis') {
+            steps {
+                echo 'Running static code analysis...'
+                
+                // Legacy tools - often skipped in older pipelines
+                // sh 'mvn sonar:sonar' // SonarQube if available
+                // sh 'findbugs:findbugs' // FindBugs for Java
+                
+                echo 'Static analysis skipped (legacy pipeline)'
+            }
+        }
+        
+        stage('Package') {
+            steps {
+                echo 'Packaging EAR file...'
+                sh 'mvn package'
+                
+                // Archive artifacts
+                archiveArtifacts artifacts: '**/target/*.ear,**/target/*.war,**/target/*.jar', 
+                                fingerprint: true
+            }
+        }
+        
+        stage('Deploy to DEV') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Deploying to Development environment...'
+                
+                // Legacy deployment script
+                sh './scripts/deploy.sh dev'
+                
+                // Or direct JBoss CLI deployment
+                sh """
+                    \$JBOSS_HOME/bin/jboss-cli.sh --connect --controller=\$DEV_SERVER \\
+                    --command="deploy --force egp-ear/target/egp-ear-1.0.0-SNAPSHOT.ear"
+                """
+            }
+        }
+        
+        stage('Integration Tests') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Running integration tests against DEV...'
+                
+                // Legacy: Often manual testing or basic smoke tests
+                sh 'mvn verify -Pintegration-test -Dtest.server=\$DEV_SERVER'
+                
+                // Wait for deployment to be ready
+                sleep(time: 30, unit: 'SECONDS')
+                
+                // Basic health check
+                sh 'curl -f http://\$DEV_SERVER/egp-portal/health || exit 1'
+            }
+        }
+        
+        stage('Deploy to TEST') {
+            when {
+                branch 'release/*'
+            }
+            steps {
+                echo 'Deploying to Test environment...'
+                
+                // Manual approval for TEST deployment (legacy practice)
+                input message: 'Deploy to TEST environment?', ok: 'Deploy'
+                
+                sh './scripts/deploy.sh test'
+            }
+        }
+        
+        stage('Deploy to PROD') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Deploying to Production environment...'
+                
+                // Multiple approvals for production (legacy governance)
+                input message: 'Deploy to PRODUCTION? This requires manager approval.', 
+                      ok: 'Deploy to Production',
+                      submitterParameter: 'APPROVER'
+                
+                // Legacy: Often done during maintenance windows
+                echo "Deployment approved by: \${APPROVER}"
+                
+                // Backup current deployment
+                sh './scripts/backup-prod.sh'
+                
+                // Deploy to production
+                sh './scripts/deploy.sh prod'
+                
+                // Post-deployment verification
+                sh './scripts/verify-deployment.sh prod'
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Clean workspace (legacy practice to save disk space)
+            cleanWs()
+        }
+        
+        success {
+            echo 'Pipeline completed successfully!'
+            
+            // Legacy notification methods
+            // emailext to: 'egp-team@corp.com',
+            //          subject: 'EGP Build Success - \${BUILD_NUMBER}',
+            //          body: 'Build completed successfully. EAR deployed to target environment.'
+        }
+        
+        failure {
+            echo 'Pipeline failed!'
+            
+            // Legacy: Email notifications and manual intervention
+            // emailext to: 'egp-team@corp.com,ops-team@corp.com',
+            //          subject: 'EGP Build FAILED - \${BUILD_NUMBER}',
+            //          body: 'Build failed. Manual intervention required.'
+        }
+    }
+}

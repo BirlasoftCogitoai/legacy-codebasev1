@@ -1,0 +1,322 @@
+/* Legacy EGP Portal Styles - Early 2000s Web Design */
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  background-color: #f5f5f5;
+  color: #333333;
+  line-height: 1.4;
+}
+
+/* Legacy: Table-based layout support */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Header styles */
+.header {
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  border-bottom: 3px solid #0066cc;
+}
+
+.header h1 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.header .subtitle {
+  font-size: 11px;
+  color: #cccccc;
+}
+
+/* Navigation */
+.nav-bar {
+  background-color: #0066cc;
+  padding: 8px;
+  border-bottom: 1px solid #004499;
+}
+
+.nav-bar a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #0055aa;
+  border: 1px solid #0077dd;
+}
+
+.nav-bar a:hover {
+  background-color: #0077dd;
+}
+
+.nav-bar a.active {
+  background-color: #ffffff;
+  color: #003366;
+}
+
+/* Main content area */
+.content {
+  padding: 15px;
+  background-color: white;
+  margin: 10px;
+  border: 1px solid #cccccc;
+}
+
+.content h2 {
+  font-size: 16px;
+  color: #003366;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #0066cc;
+  padding-bottom: 3px;
+}
+
+.content h3 {
+  font-size: 14px;
+  color: #0066cc;
+  margin: 10px 0 5px 0;
+}
+
+/* Forms */
+.form-table {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form-table td {
+  padding: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-table .label {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  width: 150px;
+  text-align: right;
+}
+
+.form-table input[type="text"],
+.form-table input[type="password"],
+.form-table input[type="email"],
+.form-table select,
+.form-table textarea {
+  width: 200px;
+  padding: 3px;
+  border: 1px solid #999999;
+  font-size: 11px;
+}
+
+.form-table textarea {
+  width: 300px;
+  height: 60px;
+}
+
+/* Buttons */
+.button {
+  background-color: #0066cc;
+  color: white;
+  border: 1px solid #004499;
+  padding: 5px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.button:hover {
+  background-color: #0055aa;
+}
+
+.button-secondary {
+  background-color: #666666;
+  border: 1px solid #444444;
+}
+
+.button-secondary:hover {
+  background-color: #555555;
+}
+
+/* Data tables */
+.data-table {
+  width: 100%;
+  border: 1px solid #cccccc;
+  margin: 10px 0;
+}
+
+.data-table th {
+  background-color: #e0e0e0;
+  font-weight: bold;
+  padding: 6px;
+  border: 1px solid #cccccc;
+  font-size: 11px;
+}
+
+.data-table td {
+  padding: 4px 6px;
+  border: 1px solid #e0e0e0;
+  font-size: 11px;
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.data-table tr:hover {
+  background-color: #ffffcc;
+}
+
+/* Status indicators */
+.status-open {
+  color: #cc6600;
+  font-weight: bold;
+}
+
+.status-closed {
+  color: #006600;
+}
+
+.status-in-progress {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+.priority-high {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.priority-urgent {
+  color: #ff0000;
+  font-weight: bold;
+  text-decoration: blink; /* Legacy: Blinking text */
+}
+
+/* Messages */
+.message {
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid;
+}
+
+.message-info {
+  background-color: #e6f3ff;
+  border-color: #0066cc;
+  color: #003366;
+}
+
+.message-success {
+  background-color: #e6ffe6;
+  border-color: #00cc00;
+  color: #006600;
+}
+
+.message-warning {
+  background-color: #fff3e6;
+  border-color: #ff9900;
+  color: #cc6600;
+}
+
+.message-error {
+  background-color: #ffe6e6;
+  border-color: #cc0000;
+  color: #990000;
+}
+
+/* Login form */
+.login-form {
+  width: 350px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white;
+  border: 2px solid #0066cc;
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.login-form table {
+  width: 100%;
+}
+
+.login-form .label {
+  text-align: right;
+  padding-right: 10px;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  font-size: 10px;
+  color: #666666;
+  border-top: 1px solid #cccccc;
+  margin-top: 20px;
+}
+
+/* Legacy: Spacer images and layout helpers */
+.spacer {
+  height: 10px;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Legacy: Print styles */
+@media print {
+  .nav-bar,
+  .button,
+  .footer {
+    display: none;
+  }
+
+  body {
+    background-color: white;
+    font-size: 10px;
+  }
+
+  .content {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Legacy: Accessibility (minimal) */
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #ff9900;
+}
+
+/* Legacy: Browser-specific hacks */
+/* IE6 and below */
+* html .content {
+  height: 1%;
+}
+
+/* IE7 */
+*:first-child + html .content {
+  min-height: 1%;
+}
